@@ -132,9 +132,12 @@
     display: none; /* Initially hidden */
     max-width: 90%; /* Prevents the box from overflowing the viewport width */
     max-height: 90%; /* Prevents the box from overflowing the viewport height */
+        text-align: justify; /* Justifies all text inside the info box */
+
     font-family: Arial, sans-serif;
-    font-size: 1.8vmin;
+    font-size: 13px;
     line-height: 1.5;
+        margin-top: 12px; /* Space before each new paragraph */
     border-radius: 5px;
     overflow-wrap: break-word;
     overflow: auto; /* Adds scrollbars if the content overflows */
@@ -149,6 +152,7 @@
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
+            font-size:15px;
             margin-bottom: 10px;
         }
 
@@ -374,49 +378,49 @@ const closeInfo = document.getElementById('close-info');
 
 const contentMapping = {
     Primordial: {
-        definition: "Definition for Primordial.",
-        relatedTerms: "Related terms for Primordial.",
-        relatedTheories: "Related theories for Primordial."
+        definition: "The ineffable ground of existence, encompassing the <b>infinite, formless truths that precede language, thought, and structured reality</b>. <p>It is timeless, boundless, and universal, representing the <b>raw essence of being</b> that exists <b>beyond human articulation</b> or <b>comprehension</b>. <p>This realm is encountered in <b>profound moments</b> of existential clarity, such as awe, stillness, or transcendence, where <b>the finite self confronts the vastness</b> of existence.<p>It is <b>not created or shaped</b> by human perception but instead <b>underlies all experience</b>, offering a connection to the eternal and unchanging.",
+        relatedTerms: "Work in progress.",
+        relatedTheories: "Work in progress."
     },
     Substratal: {
-        definition: "Definition for Substratal.",
-        relatedTerms: "Related terms for Substratal.",
-        relatedTheories: "Related theories for Substratal."
+        definition: "It represents the shared <b>patterns, archetypes, and core symbols</b> that underpin human narratives, behaviors, and cultural expressions.<p> It operates as a layer of the <b>collective unconscious</b>, containing <b>recurring motifs</b> that endure the constrains of time and space. <p>These patterns are pre-constructed, <b>not created</b> by individuals but <b>emerging organically</b> throughout history and culture.<p> It is the space where <b>foundational patterns find expression</b> in forms that resonate across humanity.",
+        relatedTerms: "Work in progress.",
+        relatedTheories: "Work in progress.."
     },
     "Apexal Fulcrum": {
-        definition: "Definition for Apexal Fulcrum.",
-        relatedTerms: "Related terms for Apexal Fulcrum.",
-        relatedTheories: "Related theories for Apexal Fulcrum."
+        definition: "It is the point of <b>transformation</b> within the framework, where layers converge <b>to either stabilize</b> and unify <b>or fragment</b> and collapse.<p> It represents a threshold <b>where meaning is tested</b>, reorganized, and <b>either synthesized</b> into coherence or <b>decomposed</b> into chaos. <p>As a space of critical transition, it can manifest as <b>moments of profound clarity, disorientation, or revelation</b>. <p>It is <b>where contradictions are confronted</b>, paradigms are challenged, and new frameworks are forged. <p>It transforms the disintegration of the foundational with the integration of the constructive, offering the <b>potential for renewal</b> and transformation.",
+        relatedTerms: "Work in progress.",
+        relatedTheories: "Work in progress."
     },
     Imaginal: {
-        definition: "Definition for Imaginal.",
-        relatedTerms: "Related terms for Imaginal.",
-        relatedTheories: "Related theories for Imaginal."
+        definition: "It is the domain of <b>creativity, storytelling, and situated meaning-making</b>, where human imagination <b>transforms raw experience</b> and <b>archetypal patterns into narratives, symbols, and cultural expressions</b>. <p>It operates as a space of synthesis, <b>merging the empirical with the substratal</b> to construct systems, stories, and interpretations that <b>shape how</b> individuals and societies <b>understand</b> their world.<p>It allows abstract concepts and foundational truths to take <b>accessible, contextualized</b> forms. <p>It is where <b>the universal becomes personal</b>, and the foundational is expressed in ways that resonate within specific cultural and individual contexts.",
+        relatedTerms: "Work in progress.",
+        relatedTheories: "Work in progress."
     },
     Empirical: {
-        definition: "Definition for Empirical.",
-        relatedTerms: "Related terms for Empirical.",
-        relatedTheories: "Related theories for Empirical."
+        definition: "The realm of <b>tangible</b>, observable reality, <b>grounded in the sensorial</b> and material world. <p>It encompasses <b>situated experiences</b> of human life, <b>shaped by</b> the constraints of <b>time, space, and physicality</b>. <p>This realm is accessed through <b>perception, action, and direct engagement</b> with the environment. <p>It offers stability and grounding, ensuring that abstract or infinite concepts are <b>made relevant and actionable</b> within specific contexts.",
+        relatedTerms: "Work in progress.",
+        relatedTheories: "Work in progress."
     },
     "Grounding Axis": {
-        definition: "Blah blah",
-        relatedTerms: "Related terms for Grounding Axis.",
-        relatedTheories: "Related theories for Grounding Axis."
+        definition: "It is the dynamic interplay between the <b>concrete</b> and the <b>boundless</b>, the <b>present</b> and the <b>timeless</b>, the <b>tangible</b> and the <b>transcendental</b>.<p>Within this axis, humans are afforded the <b>experience of the ineffable</b> through expansive experiences <em>(awe, grief, reverence, love, wonder, horror, the sublime, etc.)</em> that bypass mythopoetic construction.<p>It is <b>unmediated rawness</b>, leading to a sensation that what is being encountered is <b>truer,</b> more authentic, and more foundational than everyday reality.<p>It thrives on <b>embodied immediacy</b>, where sensory engagement fosters profound existential connection.",
+        relatedTerms: "Work in progress.",
+        relatedTheories: "Work in progress."
     },
     "Mythopoetic Axis": {
-        definition: "Definition for Mythopoetic Axis.",
-        relatedTerms: "Related terms for Mythopoetic Axis.",
-        relatedTheories: "Related theories for Mythopoetic Axis."
+        definition: "It is the dynamic space where <b>concrete narratives</b> and <b>universal patterns</b> converge to create meaning through <b>myth</b> and <b>storytelling</b>. <p>It bridges the <b>timeless truths of archetypes</b> with the evolving <b>cultural and individual interpretations</b>, allowing the abstract to become tangible and relatable. <p>This axis operates as a dialogue <b>between the collective and the personal</b>, weaving universal patterns into concrete symbols, metaphors, and creative expression.<p>It is through the study of <b>recursive motifs and patterns</b> in the realm of the imaginal that we come to know <b>the core contents</b> of the substratal.",
+        relatedTerms: "Work in progress.",
+        relatedTheories: "Work in progress."
     },
     "Foundational Dimension": {
-        definition: `The Foundational Dimension refers to the primal basis of existence that precedes language, concepts, and deliberate thought, forming the underlying framework for all human experience and meaning-making. It is defined by its pre-verbal, pre-conceptual, and pre-constructed nature, reflecting universal truths and patterns that resonate across all cultures and times. <br> This dimension is timeless and intuitive, manifesting through direct encounters with raw reality, such as awe, grief, or archetypal resonance. It exists beneath conscious articulation yet informs and shapes how humans perceive, interpret, and engage with the world.`,
-        relatedTerms: "Related terms for Foundational Dimension.",
-        relatedTheories: "Related theories for Foundational Dimension."
+        definition: "Refers to the <b>primal ground of existence</b>, encompassing the <b>universal truths and patterns</b> that underlie all human experience.<p>It is <b>pre-verbal, pre-conceptual,</b> and <b>pre-constructed</b>, existing beyond individual or cultural creation. <p>It is <b>timeless</b>, anchoring the human experience in a shared and universal ground, resonating across all contexts (transcending <b>time</b> and <b>space</b>).<p>This dimension is encountered indirectly: its truths are <b>not consciously crafted</b> but <b>emerge naturally</b>, forming the foundational basis for human understanding and expression.<p>It serves as the <b>consistent framework</b> beneath all human understanding, providing the <b>raw, unformed essence</b> from which meaning, creativity, and action emerge.<p> It is the realm of <b>potential</b> and <b>origins</b>, offering a silent but profound influence on how reality is experienced and interpreted.",
+        relatedTerms: "Work in progress.",
+        relatedTheories: "Work in progress."
     },
     "Constructive Dimension": {
-        definition: "Definition for Constructive Dimension.",
-        relatedTerms: "Related terms for Constructive Dimension.",
-        relatedTheories: "Related theories for Constructive Dimension."
+        definition: "Refers to the dimension of existence where <b>meaning is actively crafted</b>, synthesizing the observable and the symbolic into coherent structures, systems, and practices. <p>It emerges through <b>construction, interpretation,</b> and <b>action</b>, responding to the immediate realities of time and place. <p>Grounded in the tangible yet informed by imagination, this dimension allows <b>individuals, societies,</b> and <b>cultures</b> to dynamically shape their lived experiences.<p>It is grounded in a <b>concrete context</b> bound by <b>time</b> and <b>space</b>, but has the capacity to <b>evolve</b> and <b>re-shape</b> itself. <p>It is the space where ideas become concrete, where meaning takes form, and where <b>humanity actively redefines</b> its relationship to the world. <p>It turns <b>potential into expression</b>, be it through idealism or materialism.",
+        relatedTerms: "Work in progress.",
+        relatedTheories: "Work in progress."
     }
 };
 
@@ -427,9 +431,9 @@ elements.forEach(el => {
 
         if (content) {
             infoTitle.textContent = name;
-            document.getElementById('definition').textContent = content.definition;
-            document.getElementById('related-terms').textContent = content.relatedTerms;
-            document.getElementById('related-theories').textContent = content.relatedTheories;
+            document.getElementById('definition').innerHTML = content.definition;
+document.getElementById('related-terms').innerHTML = content.relatedTerms;
+document.getElementById('related-theories').innerHTML = content.relatedTheories;
         }
 
         // Reset to "Definition" tab
