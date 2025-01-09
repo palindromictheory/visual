@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Palindromic Triangle</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+            font-family: Courier New, sans-serif;
+        }
+
+        .triangle-container {
+            position: relative;
+            width: 70vmin; /* Scaled proportionally */
+            height: 70vmin; /* Scaled proportionally */
+        }
+
+        /* Triangle and Dimensions */
+        .foundational-dimension {
+            position: absolute;
+            clip-path: polygon(50% 0%, 0% 100%, 50% 100%);
+            background-color: #ffd1dc; /* Pastel pink */
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .constructive-dimension {
+            position: absolute;
+            clip-path: polygon(50% 0%, 100% 100%, 50% 100%);
+            background-color: #cde7ff; /* Pastel blue */
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .foundational-dimension:hover, .constructive-dimension:hover {
+            filter: brightness(90%);
+        }
+
+        /* Black Triangle Lines */
+        .line {
+            position: absolute;
+            background-color: black;
+            z-index: 2;
+        }
+
+        .line-left {
+            width: 2px;
+            height: 110%; /* Proportionally increased */
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(-26.5deg);
+            transform-origin: top;
+        }
+
+        .line-right {
+            width: 2px;
+            height: 110%; /* Proportionally increased */
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) rotate(26.5deg);
+            transform-origin: top;
+        }
+
+        /* Axis */
+        .axis {
+            position: absolute;
+            background-color: #8ecae6; /* Teal */
+            z-index: 3;
+            cursor: pointer;
+        }
+
+        .axis:hover {
+            filter: brightness(90%);
+        }
+
+        .grounding-axis {
+            width: 100%;
+            height: 4px; /* Slightly thicker for larger size */
+            bottom: 0;
+            left: 0;
+        }
+
+        .mythopoetic-axis {
+            width: 50%; /* Adjusted for proportion */
+            height: 4px; /* Slightly thicker for larger size */
+            top: 50%;
+            left: 25%; /* Adjusted for proportion */
+        }
+
+        /* Points */
+        .point {
+            position: absolute;
+            width: 3%; /* Proportionally increased */
+            height: 3%; /* Proportionally increased */
+            background-color: #ff6b6b; /* Coral */
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 4;
+        }
+
+        .point:hover {
+            filter: brightness(90%);
+        }
+
+        /* Point Positions */
+        .point-1 { top: 99.8%; left: 0%; transform: translate(-50%, -50%); }
+        .point-2 { top: 50.2%; left: 25%; transform: translate(-50%, -50%); }
+        .point-3 { top: -0.2; left: 50%; transform: translate(-50%, -50%); }
+        .point-4 { top: 50.2%; left: 75%; transform: translate(-50%, -50%); }
+        .point-5 { top: 99.8%; left: 100%; transform: translate(-50%, -50%); }
+
+        /* Info Boxes */
+.info-box {
+    position: fixed; /* Ensures the box is always relative to the viewport */
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 12px;
+    width:500px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    display: none; /* Initially hidden */
+    max-width: 90%; /* Prevents the box from overflowing the viewport width */
+    max-height: 90%; /* Prevents the box from overflowing the viewport height */
+    font-family: Arial, sans-serif;
+    font-size: 1.8vmin;
+    line-height: 1.5;
+    border-radius: 5px;
+    overflow-wrap: break-word;
+    overflow: auto; /* Adds scrollbars if the content overflows */
+    left: 50%; /* Centers horizontally */
+    top: 50%; /* Centers vertically */
+    transform: translate(-50%, -50%); /* Adjusts for the box dimensions */
+}
+
+
+        .info-box header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .info-box header button {
+            border: none;
+            background: none;
+            font-size: 18px; /* Slightly larger font size */
+            cursor: pointer;
+        }
+
+        .info-box .tabs {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        .info-box .tabs button {
+            flex: 1;
+            padding: 8px 12px; /* Proportionally increased */
+            background-color: #eee;
+            border: none;
+            cursor: pointer;
+        }
+
+        .info-box .tabs button.active {
+            background-color: #ddd;
+        }
+
+        .info-box .content {
+            display: none;
+        }
+
+        .info-box .content.active {
+            display: block;
+        }
+
+        /* Text for Points */
+.point-text {
+    position: absolute;
+    font-size: 2vmin; /* Scales with viewport */
+    color: black;
+    z-index: 5;
+    white-space: nowrap;
+    pointer-events: none; /* Prevent blocking clicks */
+}
+
+/* Text for Axes */
+.axis-text {
+    position: absolute;
+    font-size: 2vmin; /* Scales with viewport */
+    color: black;
+    z-index: 5;
+    text-align: center;
+    pointer-events: none; /* Prevent blocking clicks */
+    width: 100%;
+}
+
+/* Text for Dimensions */
+.dimension-text {
+    position: absolute;
+    font-size: 2vmin; /* Scales with viewport */
+    color: black;
+    z-index: 5;
+    text-align: center;
+    width: 50%;
+    pointer-events: none; /* Prevent blocking clicks */
+}
+.dimension-foundational {
+    top: 60%;
+    left: 15%;
+    transform: translate(-50%, -50%);
+}
+
+.dimension-constructive {
+    top: 60%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+.content-wrapper {
+    display: none; /* Hide all content by default */
+}
+
+.content-wrapper.active {
+    display: block; /* Show the active content */
+}
+
+.content {
+    display: none; /* Hide tabs by default */
+}
+
+.content.active {
+    display: block; /* Show the active tab */
+}
+
+
+
+    </style>
+</head>
+<body>
+    <div class="triangle-container">
+      
+      <!-- Text for Points -->
+<div class="point-text" style="top: 98%; left: -19%;">Primordial</div>
+<div class="point-text" style="top: 48%; left: 6%;">Substratal</div>
+<div class="point-text" style="top: -5%; left: 38%;">Apexal Fulcrum</div>
+<div class="point-text" style="top: 48%; left: 78%;">Imaginal</div>
+<div class="point-text" style="top: 98%; left: 103%;">Empirical</div>
+
+<!-- Text for Axes -->
+<div class="axis-text" style="top: 47%; left: 0%;">Mythopoetic Axis</div>
+<div class="axis-text" style="bottom: 1%; left: 0%;">Grounding Axis</div>
+
+<!-- Text for Dimensions -->
+<div class="dimension-text dimension-foundational" style="top: 75%; left: 32%;">Foundational<br>Dimension</div>
+<div class="dimension-text dimension-constructive" style="top: 75%; left: 68%;">Constructive<br>Dimension</div>
+
+
+        <!-- Dimensions -->
+        <div class="foundational-dimension" data-name="Foundational Dimension"></div>
+        <div class="constructive-dimension" data-name="Constructive Dimension"></div>
+
+        <!-- Black Triangle Lines -->
+        <div class="line line-left"></div>
+        <div class="line line-right"></div>
+
+        <!-- Axes -->
+        <div class="axis grounding-axis" data-name="Grounding Axis"></div>
+        <div class="axis mythopoetic-axis" data-name="Mythopoetic Axis"></div>
+
+        <!-- Points -->
+        <div class="point point-1" data-name="Primordial"></div>
+        <div class="point point-2" data-name="Substratal"></div>
+        <div class="point point-3" data-name="Apexal Fulcrum"></div>
+        <div class="point point-4" data-name="Imaginal"></div>
+        <div class="point point-5" data-name="Empirical"></div>
+
+        <!-- Info Box -->
+       <!-- Info Box -->
+<div class="info-box" id="info-box">
+    <header>
+        <span id="info-title"></span>
+        <button id="close-info">X</button>
+    </header>
+    <div class="tabs">
+        <button class="tab active" data-tab="definition">Definition</button>
+        <button class="tab" data-tab="related-terms">Related Terms</button>
+        <button class="tab" data-tab="related-theories">Related Theories</button>
+    </div>
+    <div class="content active" id="definition">Specific content for the selected point or axis will go here.</div>
+    <div class="content" id="related-terms">Terms relevant to the selected point or axis.</div>
+    <div class="content" id="related-theories">Theories associated with the selected point or axis.</div>
+</div>
+
+    <!-- Info Box -->
+<div class="info-box" id="info-box">
+    <header>
+        <span id="info-title">Primordial</span>
+        <button id="close-info">X</button>
+    </header>
+    <div class="tabs">
+        <button class="tab active" data-tab="definition">Definition</button>
+        <button class="tab" data-tab="related-terms">Related Terms</button>
+        <button class="tab" data-tab="related-theories">Related Theories</button>
+    </div>
+    <!-- Content for Primordial -->
+    <div class="content-wrapper" id="content-primordial">
+        <div class="content active" id="definition">
+            <strong>Definition:</strong> <em>Primordial</em> refers to the earliest stage or origin of something.
+            <br><br>
+            It serves as the foundational point for understanding the system.
+        </div>
+        <div class="content" id="related-terms">
+            <ul>
+                <li><em>Origin</em></li>
+                <li><strong>Genesis</strong></li>
+                <li>Foundation</li>
+            </ul>
+        </div>
+        <div class="content" id="related-theories">
+            <p>
+                <strong>Primordial Theory:</strong> This theory explains the emergence of systems from their earliest states.
+                <br>
+                Refer to the <em>Cosmogony Framework</em> for more details.
+            </p>
+        </div>
+    </div>
+
+    <!-- Repeat for other elements -->
+    <div class="content-wrapper hidden" id="content-substratal">
+        <div class="content active" id="definition">
+            <strong>Definition:</strong> The <em>substratal</em> element represents the underlying layers that support the system.
+            <br><br>
+            Think of it as the groundwork that holds everything together.
+        </div>
+        <div class="content" id="related-terms">
+            <ul>
+                <li>Base</li>
+                <li><em>Foundation</em></li>
+                <li><strong>Infrastructure</strong></li>
+            </ul>
+        </div>
+        <div class="content" id="related-theories">
+            <p>
+                <strong>Substratal Framework:</strong> This theory examines the importance of underlying structures in stability.
+                <br>
+                A comparison can be made with <em>base layers in geology</em>.
+            </p>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+    
+const elements = document.querySelectorAll('.point, .axis, .foundational-dimension, .constructive-dimension');
+const infoBox = document.getElementById('info-box');
+const infoTitle = document.getElementById('info-title');
+const closeInfo = document.getElementById('close-info');
+
+const contentMapping = {
+    Primordial: {
+        definition: "Definition for Primordial.",
+        relatedTerms: "Related terms for Primordial.",
+        relatedTheories: "Related theories for Primordial."
+    },
+    Substratal: {
+        definition: "Definition for Substratal.",
+        relatedTerms: "Related terms for Substratal.",
+        relatedTheories: "Related theories for Substratal."
+    },
+    "Apexal Fulcrum": {
+        definition: "Definition for Apexal Fulcrum.",
+        relatedTerms: "Related terms for Apexal Fulcrum.",
+        relatedTheories: "Related theories for Apexal Fulcrum."
+    },
+    Imaginal: {
+        definition: "Definition for Imaginal.",
+        relatedTerms: "Related terms for Imaginal.",
+        relatedTheories: "Related theories for Imaginal."
+    },
+    Empirical: {
+        definition: "Definition for Empirical.",
+        relatedTerms: "Related terms for Empirical.",
+        relatedTheories: "Related theories for Empirical."
+    },
+    "Grounding Axis": {
+        definition: "Blah blah",
+        relatedTerms: "Related terms for Grounding Axis.",
+        relatedTheories: "Related theories for Grounding Axis."
+    },
+    "Mythopoetic Axis": {
+        definition: "Definition for Mythopoetic Axis.",
+        relatedTerms: "Related terms for Mythopoetic Axis.",
+        relatedTheories: "Related theories for Mythopoetic Axis."
+    },
+    "Foundational Dimension": {
+        definition: `The Foundational Dimension refers to the primal basis of existence that precedes language, concepts, and deliberate thought, forming the underlying framework for all human experience and meaning-making. It is defined by its pre-verbal, pre-conceptual, and pre-constructed nature, reflecting universal truths and patterns that resonate across all cultures and times. <br> This dimension is timeless and intuitive, manifesting through direct encounters with raw reality, such as awe, grief, or archetypal resonance. It exists beneath conscious articulation yet informs and shapes how humans perceive, interpret, and engage with the world.`,
+        relatedTerms: "Related terms for Foundational Dimension.",
+        relatedTheories: "Related theories for Foundational Dimension."
+    },
+    "Constructive Dimension": {
+        definition: "Definition for Constructive Dimension.",
+        relatedTerms: "Related terms for Constructive Dimension.",
+        relatedTheories: "Related theories for Constructive Dimension."
+    }
+};
+
+elements.forEach(el => {
+    el.addEventListener('click', () => {
+        const name = el.getAttribute('data-name');
+        const content = contentMapping[name];
+
+        if (content) {
+            infoTitle.textContent = name;
+            document.getElementById('definition').textContent = content.definition;
+            document.getElementById('related-terms').textContent = content.relatedTerms;
+            document.getElementById('related-theories').textContent = content.relatedTheories;
+        }
+
+        // Reset to "Definition" tab
+        const tabs = document.querySelectorAll('.info-box .tabs button');
+        tabs.forEach(btn => btn.classList.remove('active'));
+        document.querySelector('.info-box .tabs button[data-tab="definition"]').classList.add('active');
+
+        const allContent = document.querySelectorAll('.info-box .content');
+        allContent.forEach(content => content.classList.remove('active'));
+        document.getElementById('definition').classList.add('active');
+
+        // Display the info box
+        infoBox.style.display = 'block';
+    });
+});
+
+closeInfo.addEventListener('click', () => {
+    infoBox.style.display = 'none';
+});
+
+// Make the info box stay fixed at the center of the screen
+window.addEventListener('resize', () => {
+    if (infoBox.style.display === 'block') {
+        infoBox.style.left = '50%';
+        infoBox.style.top = '50%';
+    }
+});
+
+
+const tabs = document.querySelectorAll('.info-box .tabs button');
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        // Remove 'active' class from all tabs
+        tabs.forEach(btn => btn.classList.remove('active'));
+        // Add 'active' class to the clicked tab
+        tab.classList.add('active');
+
+        // Hide all content
+        const allContent = document.querySelectorAll('.info-box .content');
+        allContent.forEach(content => content.classList.remove('active'));
+
+        // Show the corresponding content
+        const targetContent = document.getElementById(tab.getAttribute('data-tab'));
+        if (targetContent) {
+            targetContent.classList.add('active');
+        }
+    });
+});
+
+
+
+    </script>
+</body>
+</html>
